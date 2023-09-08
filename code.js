@@ -17,7 +17,7 @@ xhr.onload = function() {
             const game = data[i]
             let gameRow = document.createElement("tr");
             let posCol = document.createElement("td")
-            posCol.textContent = `#${i + 1}: `;
+            posCol.textContent = `#${i + 1} `;
             gameRow.appendChild(posCol)
             let nameCol = document.createElement("td")
             nameCol.textContent = game.username;
