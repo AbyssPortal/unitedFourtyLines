@@ -1,0 +1,40 @@
+name: Generate and Push data.json
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Node.js Script and Generate data.json
+        run: node getter.js > data.json
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add .
+          git commit -m "Generate data.json"
+          git push origin main
+
+  push-data-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Push data.json to master branch
+        run: |
+          git checkout -b master
+          git add .
+          git commit -m "Update data.json"
+          git push origin foo
