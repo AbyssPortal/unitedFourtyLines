@@ -1,22 +1,22 @@
-name: Generate and Push data.json
+name: Generate and Push baz.json
 
 on:
   push:
     branches:
       - master
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *' # This schedule will run the workflow every day at midnight UTC
 
 jobs:
-  generate-data:
+  generate-baz:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Run Node.js Script and Generate data.json
-        run: node getter.js > data.json
+      - name: Run Node.js Script and Generate baz.json
+        run: node baz.js > baz.json
 
       - name: Commit and Push Changes
         run: |
@@ -24,19 +24,20 @@ jobs:
           git config --local user.name "GitHub Action"
 
           git add .
-          git commit -m "Generate data.json"
-          git push origin main
+          git commit -m "Generate baz.json"
+          git push origin master
 
-  push-data-json:
+  push-baz-json:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Push data.json to master branch
+      - name: Push baz.json to master branch
         run: |
           git checkout -b master
+          mv baz.json /path/to/destination/baz.json
           git add .
-          git commit -m "Update data.json"
-          git push origin foo
+          git commit -m "Update baz.json"
+          git push origin master
