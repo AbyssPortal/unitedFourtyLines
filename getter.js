@@ -13,7 +13,7 @@ async function main() {
 
     const jstrisUnique = jstrisStandard.filter((game) => {
         const matchingTetrio = tetrioStandard.find((tetrioGame) => tetrioGame.username.toLowerCase() == game.username.toLowerCase())
-        if (matchingTetrio != undefined && matchingTetrio.time > game.time) {
+        if (matchingTetrio != undefined && matchingTetrio.time < game.time) {
             return false;
         }
         return true;
@@ -21,7 +21,7 @@ async function main() {
 
     const tetrioUnique = tetrioStandard.filter((game) => {
         const matchingJstris = jstrisStandard.find((jstrisGame) => jstrisGame.username.toLowerCase() == game.username.toLowerCase())
-        if (matchingJstris != undefined && matchingJstris.time > game.time) {
+        if (matchingJstris != undefined && matchingJstris.time < game.time) {
             return false;
         }
         return true;
