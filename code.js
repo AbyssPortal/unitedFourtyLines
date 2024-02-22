@@ -23,7 +23,7 @@ xhr.onload = function() {
             nameCol.textContent = game.username;
             gameRow.appendChild(nameCol)
             let timeCol = document.createElement("td");
-            timeCol.textContent = game.time.toString().substring(0, 6);
+            timeCol.textContent = (Math.round(game.time.toString()*1000)/1000).toString();
             gameRow.appendChild(timeCol);
             let replayCol = document.createElement("td");
             replayCol.innerHTML = `<a href = ${game.url}> Link</a>`;
