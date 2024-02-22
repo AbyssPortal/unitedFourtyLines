@@ -9,7 +9,8 @@ async function main() {
 
     const tetrioStandard = tetrioData.data.records.map(standardizeTetrio);
     const jstrisData = await getJstrisLeaderboards();
-    const jstrisStandard = jstrisData.map(standardizeJstris);
+    const jstrisStandardNull = jstrisData.map(standardizeJstris);
+    const jstrisStandard = jstrisStandardNull.filter((game) => game.username != null)
 
     const jstrisUnique = jstrisStandard.filter((game) => {
         const matchingTetrio = tetrioStandard.find((tetrioGame) => tetrioGame.username.toLowerCase() == game.username.toLowerCase())
