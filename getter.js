@@ -35,7 +35,7 @@ async function main() {
 
 function standardizeTetrio(record) {
     let res = {};
-    res.time = record.results.stats.finaltime / 1000;
+    res.time = record.results.stats.finaltime /1000;
     // res.pieces = record.endcontext.piecesplaced;
     // res.pps = res.pieces / res.time;
     // res.keys = record.endcontext.inputs;
