@@ -7,7 +7,7 @@ main().then(() => {
 async function main() {
     const tetrioData = await getTetrioLeaderboards();
 
-    const tetrioStandard = tetrioData.data.records.map(standardizeTetrio);
+    const tetrioStandard = tetrioData.map(standardizeTetrio);
     const jstrisData = await getJstrisLeaderboards();
     const jstrisStandardNull = jstrisData.map(standardizeJstris);
     const jstrisStandard = jstrisStandardNull.filter((game) => game.username != null)
@@ -35,7 +35,7 @@ async function main() {
 
 function standardizeTetrio(record) {
     let res = {};
-    res.time = record.endcontext.finalTime / 1000;
+    res.time = record.results.stats.finalTime / 1000;
     // res.pieces = record.endcontext.piecesplaced;
     // res.pps = res.pieces / res.time;
     // res.keys = record.endcontext.inputs;
@@ -58,10 +58,11 @@ function standardizeJstris(record) {
 
 
 async function getTetrioLeaderboards() {
-    let url = "https://ch.tetr.io/api/streams/40l_global";
+    let url = "https://ch.tetr.io/api/records/40l_global?limit=100";
     let response = await fetch(url);
     let data = await response.json();
-    return data;
+    let res = data.data.entries
+    return res;
 }
 
 async function getJstrisLeaderboards() {
