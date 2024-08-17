@@ -56,12 +56,43 @@ function standardizeJstris(record) {
     return res;
 }
 
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 async function getTetrioLeaderboards() {
-    let url = "https://ch.tetr.io/api/records/40l_global?limit=100";
-    let response = await fetch(url);
-    let data = await response.json();
-    let res = data.data.entries
+
+    let url = "https://ch.tetr.io/api/records/40l_global";
+    let session = (new Date() / 1000) + "_UNITED_FORTY_LINES";
+    let options = {
+        headers: {
+            'X-Session-ID': session,
+        }
+    };
+    let res = [];
+    for (let i = 0; i < 10; i++) {
+        if (i == 0) {
+            let curr_url = url + "?limit=100";
+            let response = await fetch(curr_url, options);
+            if (response.ok) {
+                let data = await response.json();
+                res = res.concat(data.data.entries);
+            } else {
+                console.log("HTTP-Error: " + response.status);
+            }
+            await sleep(1000);
+            continue;
+        }
+        let after_parm = "?after="  + res[res.length - 1].p.pri + ":" + res[res.length - 1].p.sec + ":" + res[res.length - 1].p.ter;
+        let curr_url = url + after_parm + "&limit=100"  ;
+        let response = await fetch(curr_url, options);
+        if (response.ok) {
+            let data = await response.json();
+            res = res.concat(data.data.entries);
+        } else {
+            console.log("HTTP-Error: " + response.status);
+        }
+        await sleep(1000);
+    }
     return res;
 }
 
