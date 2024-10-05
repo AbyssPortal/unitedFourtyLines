@@ -42,7 +42,7 @@ function standardizeTetrio(record) {
     // res.kpp = res.keys / res.pieces;
     // ^^ commented out because jstris dosen't support this ^^
     res.username = record.user.username;
-    res.url = "https://tetr.io/#r:" + record.replayid;
+    res.url = "https://tetr.io/#R:" + record.replayid;
     res.platform = "tetrio"
     return res;
 }
